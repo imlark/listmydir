@@ -1,12 +1,9 @@
 import os
+import sys
+import argparse
 
 def get_filepaths(directory):
-    """
-    This function will generate the file names in a directory 
-    tree by walking the tree either top-down or bottom-up. For each 
-    directory in the tree rooted at directory top (including top itself), 
-    it yields a 3-tuple (dirpath, dirnames, filenames).
-    """
+
     file_paths = []  # List which will store all of the full filepaths.
 
     # Walk the tree.
@@ -15,9 +12,27 @@ def get_filepaths(directory):
             # Join the two strings in order to form the full filepath.
             filepath = os.path.join(root, filename)
             file_paths.append(filepath)  # Add it to the list.
+	# skip directors
 
     return file_paths  # Self-explanatory.
 
-# Run the above function and store its results in a variable.   
-full_file_paths = get_filepaths("/Users/lark/Documents/Work/Workspace/simpleapp")
-print full_file_paths
+def processArgs(argv):
+	# reference url : http://stackoverflow.com/questions/18335687/python-using-argparse-argumentparser-method	
+	parser = argparse.ArgumentParser(description='List my dirs.')
+	parser.add_argument("indir", help="input directory name")
+	parser.add_argument("outdir", help="output directory name")
+
+	# parser.print_help()
+	args = parser.parse_args()
+
+def main(argv):
+	# Agument
+	processArgs(argv)
+
+	# srcDir 
+	full_file_paths = get_filepaths("/Users/lark/Documents/Work/Workspace/simpleapp")
+	# print full_file_paths
+
+
+if __name__ == "__main__":
+	main(sys.argv[1:])
